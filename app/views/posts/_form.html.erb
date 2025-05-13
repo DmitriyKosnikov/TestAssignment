@@ -1,0 +1,41 @@
+<%= form_with(model: post, 
+             data: { 
+               controller: "post-form",
+               action: "submit->post-form#submit"
+             }) do |form| %>
+
+  <% if post.errors.any? %>
+    <div id="error_explanation" style="color: red">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div data-post-form-target="notice" class="hidden mb-4 p-3 rounded"></div>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title, data: { "post-form-target": "title" } %>
+  </div>
+
+  <div>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_area :body, data: { "post-form-target": "body" } %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, "Author", style: "display: block" %>
+    <%= form.select :user_id, 
+          User.all.map { |u| [u.name, u.id] }, 
+          { include_blank: "Select user" },
+          data: { "post-form-target": "userSelect" } %>
+  </div>
+
+  <div>
+    <%= form.submit data: { "post-form-target": "submitBtn" } %>
+  </div>
+<% end %>

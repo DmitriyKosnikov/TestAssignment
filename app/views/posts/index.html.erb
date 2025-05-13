@@ -1,0 +1,27 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Posts</h1>
+
+<%= link_to "New post", new_post_path %>
+<%= link_to "Users", users_path %>
+
+<div data-controller="pagination">
+  <div id="posts">
+  <% @posts.each do |post| %>
+    <%= render post %>
+    <p>
+      <%= link_to "Show this post", post %>
+    </p>
+  <% end %>
+  </div>
+
+  <% if @posts.next_page %>
+    <button 
+      data-action="click->pagination#loadMore"
+      data-pagination-target="button"
+      class="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+    >
+      Загрузить ещё
+    </button>
+  <% end %>
+</div>
